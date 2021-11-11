@@ -1,0 +1,34 @@
+---
+
+- name: "Clean Folder"
+  file:
+    path: "/home/{{ ansible_user }}/webapp-v2"
+    state: absent
+
+- name: Create webapp directory
+  file:
+    path: "/home/{{ ansible_user }}/webapp-v2/"
+    state: directory
+
+  
+- name: "git clone to nginx folder"
+  git:
+    repo: https://github.com/diranetafen/static-website-example.git
+    dest: /home/{{ ansible_user }}/webapp-v2/
+
+- name: Generate html
+  template:
+    src: templates/index.html.j2
+    dest: "/home/{{ ansible_user }}/webapp-v2/index.html"
+
+- name: "Launching an nginx Container"
+  docker_container:
+    name: nginx-server
+    image: nginx
+    state: started
+    ports:
+#          - "{{ port }}:80"
+      - "8001:80"
+    volumes:
+      - /home/{{ ansible_user }}/webapp-v2:/usr/share/nginx/html/
+...
