@@ -1,0 +1,5 @@
+---
+webapp_image_and_tag: "matao39/static-webapp:v1"
+webapp_port: "81:80"
+#webapp_port: "81"
+...
