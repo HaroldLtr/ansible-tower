@@ -1,0 +1,8 @@
+- name: "Launching webapp Container"
+  docker_container:
+      name: webapp
+      image: "{{ webapp_image_and_tag }}"
+      state: started
+      ports:
+        - "{{ webapp_port }}"
+        #- "{{ webapp_port }} : 80"
